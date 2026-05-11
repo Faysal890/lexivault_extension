@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LexiVault Icon Generator</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 24px; max-width: 520px; background: #f9fafb; }
+    h1 { font-size: 22px; margin-bottom: 16px; color: #1a202c; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #6b7280; margin-bottom: 12px; }
+    .previews { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 16px; }
+    .preview { text-align: center; }
+    .preview span { display: block; font-size: 11px; color: #9ca3af; margin-top: 6px; }
+    canvas { display: block; border-radius: 4px; }
+    .downloads { display: flex; flex-direction: column; gap: 8px; }
+    a.dl-btn {
+      display: block; padding: 9px 14px; background: #4f46e5; color: #fff;
+      text-decoration: none; border-radius: 8px; font-size: 13px; font-weight: 600;
+      text-align: center; transition: background .15s;
+    }
+    a.dl-btn:hover { background: #4338ca; }
+    .steps { padding-left: 20px; line-height: 2; font-size: 13px; color: #374151; }
+    code { background: #f3f4f6; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>LexiVault Icon Generator</h1>
+
+  <div class="card">
+    <h2>Instructions</h2>
+    <ol class="steps">
+      <li>Click each download button below to save the PNG files</li>
+      <li>Create an <code>icons/</code> folder inside the extension directory</li>
+      <li>Move the downloaded PNGs into <code>icons/</code></li>
+      <li>Load the extension at <code>chrome://extensions</code> → Load unpacked</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Icon Preview</h2>
+    <div class="previews" id="previews"></div>
+    <div class="downloads" id="downloads"></div>
+  </div>
+
+  <script>
+    const sizes = [16, 48, 128];
+    const previewsEl  = document.getElementById('previews');
+    const downloadsEl = document.getElementById('downloads');
+
+    sizes.forEach(size => {
+      const canvas = document.createElement('canvas');
+      canvas.width  = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      const cx = size / 2;
+      const cy = size / 2;
+      const r  = size / 2;
+
+      // Indigo circle background
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#4f46e5';
+      ctx.fill();
+
+      // White text
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      if (size >= 48) {
+        ctx.font = `bold ${Math.round(size * 0.38)}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText('LV', cx, cy);
+      } else {
+        ctx.font = `bold ${Math.round(size * 0.55)}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.fillText('L', cx, cy + 0.5);
+      }
+
+      // Preview
+      const wrapper = document.createElement('div');
+      wrapper.className = 'preview';
+      wrapper.appendChild(canvas);
+      const label = document.createElement('span');
+      label.textContent = `${size}×${size}`;
+      wrapper.appendChild(label);
+      previewsEl.appendChild(wrapper);
+
+      // Download button
+      const a = document.createElement('a');
+      a.href      = canvas.toDataURL('image/png');
+      a.download  = `icon${size}.png`;
+      a.className = 'dl-btn';
+      a.textContent = `⬇  Download icon${size}.png  (${size}×${size})`;
+      downloadsEl.appendChild(a);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiVault</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="header">
+    <img src="assets/logo.ico" alt="" class="header-logo" id="header-logo">
+    <div>
+      <div class="header-title">LexiVault</div>
+      <div class="header-sub">Word Saver</div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Connection status -->
+    <div class="status-card">
+      <span class="status-dot" id="status-dot"></span>
+      <span class="status-text" id="status-text">No API key set</span>
+    </div>
+
+    <!-- Default language (always visible) -->
+    <div class="field-group">
+      <label for="default-lang">Default Language</label>
+      <select id="default-lang">
+        <option value="bn">Bengali</option>
+        <option value="hi">Hindi</option>
+        <option value="ar">Arabic</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="pt">Portuguese</option>
+        <option value="tr">Turkish</option>
+        <option value="ur">Urdu</option>
+        <option value="id">Indonesian</option>
+      </select>
+    </div>
+
+    <!-- API key — hidden until toggled -->
+    <div class="collapsible">
+      <button class="collapsible-toggle" id="key-toggle" aria-expanded="false">
+        <span>🔑</span>
+        <span>API Key</span>
+        <span class="chevron" id="chevron">›</span>
+      </button>
+      <div class="collapsible-body" id="key-section">
+        <div class="collapsible-inner">
+          <div class="field-group">
+            <label for="api-key">Key</label>
+            <div class="input-row">
+              <input
+                type="password"
+                id="api-key"
+                placeholder="lx_xxxxxxxx_..."
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button id="toggle-key" class="icon-btn" aria-label="Show / hide">
+                <span id="eye-icon">👁</span>
+              </button>
+            </div>
+            <ol class="hint-steps">
+              <li>Go to <a href="https://lexivault.app/profile" target="_blank" rel="noopener noreferrer">lexivault.app → Profile → API Keys</a></li>
+              <li>Click <strong>Create new key</strong> and copy it</li>
+              <li>Paste it above and click <strong>Save Settings</strong></li>
+            </ol>
+            <p class="hint hint-note">After saving, select any English word on a webpage to translate and save it to your vault.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="save-status" role="alert" aria-live="polite"></div>
+
+    <button id="save-btn" class="btn-primary">Save Settings</button>
+
+  </main>
+
+  <footer>
+    <a href="https://lexivault.app" target="_blank" rel="noopener noreferrer">Open LexiVault →</a>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
